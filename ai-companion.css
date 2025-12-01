@@ -1,0 +1,445 @@
+/* ------------------------------------------------------
+   GLOBAL THEME VARIABLES
+------------------------------------------------------ */
+:root {
+    --accent: #7B5CFF;
+    --accent-hover: #6f51e8;
+
+    --panel: #f7f7f9;
+    --panel-light: #ffffff;
+    --panel-hover: #fafafa;
+
+    --border: #dcdcdc;
+
+    --text-primary: #222;
+    --text-secondary: #555;
+
+    --radius-md: 8px;
+    --radius-lg: 14px;
+}
+
+
+/* BODY */
+body {
+    margin: 0;
+    font-family: Inter, sans-serif;
+    background: #fdfdfd;
+    color: var(--text-primary);
+}
+
+.field input,
+.field textarea {
+    all: unset;
+    display: block;
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    background: var(--input-bg);
+    color: var(--text);
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+/* ------------------------------------------------------
+   APP CONTAINER
+------------------------------------------------------ */
+.app-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.app-title {
+    font-size: 2rem;
+    margin: 10px 0 20px 0;
+}
+
+
+/* ------------------------------------------------------
+   TOOLBAR
+------------------------------------------------------ */
+.tool-bar {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 10px 0;
+}
+
+.tool-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--border);
+    background: white;
+    padding: 8px 12px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+}
+
+.tool-btn.active {
+    background: var(--accent);
+    color: white;
+}
+
+
+/* ------------------------------------------------------
+   COLLAPSIBLE SIDEBAR
+------------------------------------------------------ */
+
+.open-sidebar-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.sidebar {
+    position: fixed;
+    left: -280px;
+    top: 0;
+    width: 260px;
+    height: 100%;
+    background: var(--panel);
+    border-right: 1px solid var(--border);
+    padding: 20px;
+    transition: left 0.3s ease;
+    z-index: 20;
+}
+
+.sidebar.open {
+    left: 0;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.character-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.character-list li {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 10px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    margin-bottom: 8px;
+}
+
+.add-character-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 15;
+}
+
+.sidebar-backdrop.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* -------------------------------------------- */
+/* COLLAPSIBLE CHARACTER PANEL */
+/* -------------------------------------------- */
+
+.collapse-panel {
+    background: var(--panel);
+    border-radius: 8px;
+    padding: 0;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.collapse-header {
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+    background: var(--panel);
+}
+
+.collapse-header h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--text);
+}
+
+.collapse-icon {
+    transition: transform 0.3s ease;
+    font-size: 1.2rem;
+    color: var(--text-light);
+}
+
+.collapse-content {
+    padding: 18px;
+    border-top: 1px solid var(--border);
+    display: none; /* collapsed by default */
+    background: var(--panel);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden; /* prevents spillover */  
+}
+
+.collapse-content.open {
+    display: block;
+}
+
+.collapse-icon.rotated {
+    transform: rotate(180deg);
+}
+
+/* Character fields inside collapsible panel */
+.collapse-content .field {
+    margin-bottom: 16px;
+}
+
+.collapse-content label {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+    color: var(--text);
+}
+
+.collapse-content input,
+.collapse-content textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--input-bg);
+    color: var(--text);
+    font-size: 0.95rem;
+    resize: vertical;
+}
+
+
+.collapse-content textarea {
+    min-height: 70px;
+}
+
+.collapse-content .btn {
+    display: inline-block;
+    padding: 10px 14px;
+    background: var(--accent);
+    color: white;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.collapse-content .btn:hover {
+    opacity: 0.85;
+}
+
+
+/* ------------------------------------------------------
+   CHARACTER PANEL (MAIN)
+------------------------------------------------------ */
+.character-panel-main {
+    background: var(--panel);
+    padding: 16px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.character-panel-main textarea,
+.character-panel-main input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: white;
+}
+
+
+/* ------------------------------------------------------
+   MODAL (ADVANCED DETAILS)
+------------------------------------------------------ */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 420px;
+    background: white;
+    transform: translate(-50%, -50%) scale(0.8);
+    padding: 20px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.25s ease;
+    z-index: 100;
+}
+
+.modal.open {
+    opacity: 1;
+    pointer-events: all;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.modal-body input {
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--panel-light);
+}
+
+.modal-save-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 50;
+}
+
+.modal-backdrop.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Make modal scrollable if taller than viewport */
+#advancedModal {
+    max-height: 90vh;
+    overflow-y: auto;
+    padding-bottom: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(450px, 95vw);
+    background: var(--panel);
+    border-radius: 10px;
+    padding: 20px;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+/* ------------------------------------------------------
+   EDITOR LAYOUT
+------------------------------------------------------ */
+.editor-layout {
+    display: flex;
+    gap: 20px;
+}
+
+.editor-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.editor-textarea {
+    min-height: 240px;
+    padding: 12px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    background: white;
+}
+
+.run-button {
+    background: var(--accent);
+    color: white;
+    padding: 10px 14px;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+}
+
+.output-box {
+    min-height: 240px;
+    padding: 12px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+
+.diff-output {
+    padding: 16px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    white-space: pre-wrap;
+    line-height: 1.5;
+    margin-top: 14px;
+}
+
+.diff-output del {
+    background: rgba(255,200,200,0.4);
+    text-decoration: line-through;
+}
+
+.diff-output ins {
+    background: rgba(200,255,200,0.4);
+    text-decoration: none;
+}
+
+#toggle-diff {
+    margin-top: 10px;
+    padding: 8px 14px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+}
