@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghostwriter | Writing Aid</title>
+    <link rel="stylesheet" href="ai-companion.css">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <script src="https://unpkg.com/diff-match-patch@1.0.5/index.js"></script>
+
+</head>
+
+<body>
+
+    <!-- LEFT SIDEBAR OVERLAY -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h2>Characters</h2>
+            <button id="closeSidebar" class="close-sidebar-btn">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <ul id="characterList" class="character-list"></ul>
+
+        <button id="addCharacterBtn" class="add-character-btn">
+            <i class="fa-solid fa-plus"></i> Add Character
+        </button>
+    </div>
+
+    <!-- DARK BACKDROP FOR SIDEBAR -->
+    <div id="sidebarBackdrop" class="sidebar-backdrop"></div>
+
+    <!-- ADVANCED DETAILS MODAL -->
+    <div id="advancedModal" class="modal">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h3>Advanced Character Details</h3>
+                <button id="closeModal" class="close-modal-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <label>DOB</label>
+                <input id="adv-dob" type="date">
+
+                <label>Zodiac</label>
+                <input id="adv-zodiac" type="text" placeholder="Aries, Libra…">
+
+                <label>Birthplace</label>
+                <input id="adv-birthplace" type="text">
+
+                <label>Ethnicity</label>
+                <input id="adv-ethnicity" type="text">
+
+                <label>Religion</label>
+                <input id="adv-religion" type="text">
+
+                <label>Parents</label>
+                <input id="adv-parents" type="text">
+
+                <label>Siblings</label>
+                <input id="adv-siblings" type="text">
+
+                <label>Best Friends</label>
+                <input id="adv-bestfriends" type="text">
+
+                <label>Residence</label>
+                <input id="adv-residence" type="text">
+
+                <label>High School</label>
+                <input id="adv-highschool" type="text">
+
+                <label>College</label>
+                <input id="adv-college" type="text">
+
+                <label>Career</label>
+                <input id="adv-career" type="text">
+            </div>
+
+            <div class="modal-footer">
+                <button id="saveAdvanced" class="modal-save-btn">Save</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="modalBackdrop" class="modal-backdrop"></div>
+
+    <!-- MAIN APP -->
+    <div class="app-container">
+
+        <!-- SIDEBAR TOGGLE -->
+        <button id="openSidebar" class="open-sidebar-btn">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <h1 class="app-title">Ghostwriter Writing Aid</h1>
+
+        <!-- TOOLBAR -->
+        <div class="tool-bar">
+            <button class="tool-btn active" data-tool="developmental">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                <span>Dev Edit</span>
+            </button>
+
+            <button class="tool-btn" data-tool="lineedit">
+                <i class="fa-solid fa-pen-nib"></i>
+                <span>Line Edit</span>
+            </button>
+
+            <button class="tool-btn" data-tool="dialogue">
+                <i class="fa-solid fa-comment-dots"></i>
+                <span>Dialogue</span>
+            </button>
+
+            <button class="tool-btn" data-tool="emotion">
+                <i class="fa-solid fa-heart"></i>
+                <span>Emotion</span>
+            </button>
+
+            <button class="tool-btn" data-tool="sensory">
+                <i class="fa-solid fa-eye"></i>
+                <span>Sensory</span>
+            </button>
+
+            <button class="tool-btn" data-tool="pacing">
+                <i class="fa-solid fa-bolt"></i>
+                <span>Pacing</span>
+            </button>
+
+            <button class="tool-btn" data-tool="summary">
+                <i class="fa-solid fa-file-lines"></i>
+                <span>Summary</span>
+            </button>
+
+            <button class="tool-btn" data-tool="voice">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>Voice</span>
+            </button>
+
+            <button class="tool-btn" data-tool="grammar">
+                <i class="fa-solid fa-spell-check"></i>
+                <span>Grammar</span>
+            </button>
+        </div>
+
+        <!-- CHARACTER PANEL -->
+        <div class="collapse-panel">
+            <div class="collapse-header" id="characterPanelHeader">
+                <h2>Character Details</h2>
+                <span class="collapse-icon">▾</span>
+            </div>
+        
+            <div class="collapse-content" id="characterPanelContent">
+        
+                <div class="field">
+                    <label>Name</label>
+                    <input id="char-name" type="text" placeholder="Character name..." />
+                </div>
+        
+                <div class="field">
+                    <label>Voice / Personality</label>
+                    <textarea id="char-voice" placeholder="Character voice..."></textarea>
+                </div>
+        
+                <div class="field">
+                    <label>Backstory</label>
+                    <textarea id="char-backstory" placeholder="Backstory..."></textarea>
+                </div>
+        
+                <button id="openAdvanced" class="btn">Advanced Details</button>
+        
+            </div>
+        </div>
+        
+        
+
+        <!-- EDITOR -->
+        <div class="editor-layout">
+
+            <div class="editor-panel">
+                <label class="panel-title">Your Text</label>
+                <textarea id="input-text" class="editor-textarea"
+                          placeholder="Paste your scene here..."></textarea>
+                <button id="runButton" class="run-button">Run AI</button>
+            </div>
+
+            <div class="editor-panel">
+                <label class="panel-title">AI Output</label>
+                <div id="output-box" class="output-box">
+                    The AI's revisions will appear here.
+                </div>
+                <!-- Rewrite Diff Output (initially hidden) -->
+            <div id="diff-output" class="diff-output" style="display: none;"></div>
+
+                <!-- Toggle Diff Button -->
+            <!-- <button id="toggle-diff" class="btn" style="margin-top: 10px;">Show Diff</button> -->
+
+            <button id="toggle-diff" style="display:none;">Show Diff</button>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <script src="ai-companion.js"></script>
+
+</body>
+</html>
